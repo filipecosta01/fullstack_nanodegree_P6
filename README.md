@@ -58,6 +58,7 @@ From the terminal, after access the virtual machina through SSH, had to:
    3. libapache2-mod-wsgi
 
 Then, for the Item Catalog project:
+
 3. Install, using `sudo apt-get install python-` command, the libs:
     1. flask
     2. sqlalchemy
