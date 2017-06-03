@@ -65,6 +65,7 @@ Then, for the Item Catalog project:
     4. httplib2
     5. requests
     6. psycopg2
+
 4. Changed database_setup.py file to connect to postgresql database and do the initial setup
 5. Changed catalog_loader.py file to connect to postgresql database to run the initial data
 6. Changed server.py file to:
