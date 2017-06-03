@@ -29,6 +29,69 @@ and configure each property you want (is it related to network? Disk? Backup?).
 So, in order to keep it really simple, they made a super intuitive interface and we didn't need to configure
 the firewalls using [UFW](https://www.linux.com/learn/introduction-uncomplicated-firewall-ufw).
 
+## Database
+
+Postgresql is currently the database used for the Item Catalog web application.
+The default database is `catalog` and the default user, owner of this database is `catalog` too.
+
+To create the database, follow the steps:
+1. Start the conection with the server and properly log in
+2. Run `sudo -u postgres psql` to start the Postgresql shell
+3. Run `CREATEDB catalog` to create the catalog database
+
+To create the user, follow the steps:
+1. Start the conection with the server and properly log in
+2. Run `sudo -u postgres psql` to start the Postgresql shell
+3. Run `CREATE USER catalog WITH PASSWORD '<SOME_PASSWORD>';` to create the catalog user
+4. Run `GRANT ALL PRIVILEGES ON DATABASE "catalog" TO catalog;` to grant the permissions to catalog user
+
+## Apache2 Configs
+
+To correctly deploy the application, Apache2 keeps a folder where it's possible to include the page's contents, such as html, javascript and css files.
+So, to deploy the application, do as follow:
+1. Clone the Item Catalog project and move the main folder to `/var/www/`
+2. Create the `myapp.wsgi` (Web Server Gateway Interface) file inside `/var/www/html` as:
+```
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+
+sys.path.insert(0, "/var/www/item-catalog/")
+
+from server import app as application
+application.secret_key = "full_stack_catalog_project"
+```
+  Where:
+  1. The `application.secret_key` can be defined as any string
+
+Then, after these steps, it's time to tell the Apache2 that the server should run this new file `myapp.wsgi`. Do as follow:
+1. Already connected to the remote server, go to `/etc/apache2/sites-enabled/`
+2. Configure the `000-default.conf` file as:
+```
+<VirtualHost *:80>
+	ServerName 191.232.190.28
+	ServerAlias fullstack-filipecosta-p6.brazilsouth.cloudapp.azure.com
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	LogLevel debug
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        WSGIScriptAlias / /var/www/html/myapp.wsgi
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+```
+  Where:
+  1. ServerName is the current server name where the app will be hosted
+  2. ServerAlias is the url where the app can be accessed
+  3. WSGIScriptAlias should have the main page ("/") pointing to the file configured few steps before.
+  
+Now restart the Apache2 (`sudo service apache2 restart`) and Apache2Ctl (`sudo apache2ctl restart`).
+
+Access the URL in ServerAlias above and the application must be running.
 
 ### Where to Find the Application?
 You can find the Item Catalog project running on the Linux Server here:
