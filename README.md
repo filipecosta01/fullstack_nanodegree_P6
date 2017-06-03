@@ -17,7 +17,10 @@ default configurations for web applications, mobile applications and more.
 The specs of the virtual machine that is running on the cloud are:
 DS1_V2 Standard machine, single core, 7GB SSD.
 
-Microsoft Azure allows the users to configure outbound and inbound security.
+Microsoft Azure allows the users to configure outbound and inbound security as below:
+https://cloud.githubusercontent.com/assets/2905403/26757066/3f6f0ca0-4887-11e7-858e-1b9a9ff99273.png
+https://cloud.githubusercontent.com/assets/2905403/26757067/3f89d6ca-4887-11e7-897b-47b13520fcd9.png
+
 The virtual machine has separated environments to make even easier to make it more obvious where to find
 and configure each property you want (is it related to network? Disk? Backup?).
 So, in order to keep it really simple, they made a super intuitive interface and we didn't need to configure
