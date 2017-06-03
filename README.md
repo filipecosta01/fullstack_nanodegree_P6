@@ -53,9 +53,9 @@ Note that:
 From the terminal, after access the virtual machina through SSH, had to:
 1. First, update and upgrade the machine, according to instructions
 2. Install, using `sudo apt-get install` command, the applications:
-  1. apache2
-  2. postgresql
-  3. libapache2-mod-wsgi
+   1. apache2
+   2. postgresql
+   3. libapache2-mod-wsgi
 
 Then, for the Item Catalog project:
 3. Install, using `sudo apt-get install python-` command, the libs:
